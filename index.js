@@ -1,14 +1,24 @@
 import express from 'express';
 import cors from 'cors';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import db from './config/database.js'
+import db from './config/database.js';
+import router from './routes/user.js';
 
-const app = express();
 dotenv.config();
 const PORT = process.env.PORT || 3000;
+
+const app = express();
+const corsOptions = {
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
+
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
+app.use(router);
 
 db()
   .then(() => {

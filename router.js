@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-const usersRouter = require("./routes/user");
+import usersRouter from './routes/user.js';
 
 // routes
 router.use("/users", usersRouter);
