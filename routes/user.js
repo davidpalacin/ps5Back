@@ -7,6 +7,8 @@ import verifyToken from '../middlewares/verifyToken.js';
 
 /* GET users listing. */
 router.get("/users", UserController.getAll);
+router.get("/users/:name", UserController.getByName);
 router.post("/users/create", UserController.create);
+router.delete("/users/delete/:name", UserController.delete);
 
 export default router;
