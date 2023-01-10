@@ -6,6 +6,6 @@ import isSuperAdmin from '../middlewares/isSuperAdmin.js';
 import verifyToken from '../middlewares/verifyToken.js';
 
 /* GET users listing. */
-router.get("/", UserController.getAll);
+router.get("/users", UserController.getAll);
 
 export default router;
