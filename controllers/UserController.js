@@ -42,6 +42,7 @@ UserController.getByName = async (req, res) => {
 // Create user
 UserController.create = async (req, res) => {
   try {
+    // TODO: hashear la contraseña y guardar el hash
     const newUser = {
       name: req.body.name,
       email: req.body.email,
