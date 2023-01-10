@@ -20,4 +20,22 @@ UserController.getAll = async (req, res) => {
   }
 };
 
+UserController.create = async (req, res) => {
+
+  try {
+    const newUser = {
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      role: req.body.role || "user",
+    };
+    const result = User.insertMany(newUser);
+
+    res.json({message: 'User inserted', inserted: newUser});
+  } catch (error) {
+    res.status(500).json({error: "internal server error"})
+  }
+  
+}
+
 export default UserController;
