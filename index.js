@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import db from './config/database.js';
-import router from './routes/user.js';
+import routerUser from './routes/user.js';
+import routerMovie from './routes/movie.js';
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -18,7 +19,8 @@ const corsOptions = {
 
 app.use(express.json());
 app.use(cors(corsOptions));
-app.use(router);
+app.use(routerUser);
+app.use(routerMovie);
 
 db()
   .then(() => {

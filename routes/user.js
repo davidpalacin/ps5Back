@@ -9,6 +9,7 @@ import verifyToken from '../middlewares/verifyToken.js';
 router.get("/users", UserController.getAll);
 router.get("/users/:name", UserController.getByName);
 router.post("/users/create", UserController.create);
+router.post("/users/login", UserController.login);
 router.delete("/users/delete/:name", UserController.delete);
 
 export default router;

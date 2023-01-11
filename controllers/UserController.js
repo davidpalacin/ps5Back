@@ -21,6 +21,7 @@ UserController.getAll = async (req, res) => {
   }
 };
 
+// get user by name
 UserController.getByName = async (req, res) => {
   try {
     const user = await User.findOne({name: req.params.name});
@@ -64,6 +65,25 @@ UserController.delete = async (req, res) => {
     res.json({message: `${req.params.name} DELETED`});
   } catch (error) {
     res.status(500).send("internal server error");
+  }
+}
+
+// user login
+UserController.login = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      name: req.body.name,
+      password: req.body.password
+    });
+
+    if(user){
+      res.json("Credencias correctas, te tengo que dar un access token.");
+    }else{
+      res.status(400).json('Nombre de usuario o contraseña incorrectos');
+    }
+
+  } catch (error) {
+    res.status(500).send('internal server error');
   }
 }
 
