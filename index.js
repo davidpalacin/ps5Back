@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import db from './config/database.js';
 import routerUser from './routes/user.js';
 import routerMovie from './routes/movie.js';
+import routerAuth from './routes/auth.js';
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use(routerUser);
 app.use(routerMovie);
+app.use(routerAuth);
 
 db()
   .then(() => {
