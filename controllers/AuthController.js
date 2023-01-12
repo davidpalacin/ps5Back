@@ -1,11 +1,10 @@
-import User from '../models/User.js';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import User from "../models/User.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const AuthController = {};
 
 AuthController.register = async (req, res) => {
-
   try {
     const { name, email, password } = req.body;
 
@@ -41,7 +40,6 @@ AuthController.register = async (req, res) => {
 };
 
 AuthController.login = async (req, res) => {
-
   try {
     const { email, password } = req.body;
 
@@ -54,27 +52,36 @@ AuthController.login = async (req, res) => {
     }
 
     const user = await User.findOne({ email: email });
+    if(user) {
+      const isValidPassword = bcrypt.compareSync(password, user.password);
+      
+      if (!isValidPassword) {
+        return res.status(401).json({
+          success: false,
+          message: "Bad Credentials",
+        });
+      }
 
-    const isValidPassword = bcrypt.compareSync(password, user.password);
+      const token = jwt.sign(
+        { user_id: user._id, user_role: user.role },
+        process.env.JWT_SECRET,
+        { expiresIn: "20m" }
+      );
 
-    if (!isValidPassword) {
-      return res.status(401).json({
-        success: false,
-        message: "Bad Credentials",
+      return res.status(200).json({
+        success: true,
+        message: `User Logged as ${user.role.toUpperCase()}`,
+        token: token,
+        name: user.name,
+        role: user.role,
       });
+    } else {
+      res.status(401).json({
+        success: false,
+        message: "bad credentials"
+      })
     }
 
-    const token = jwt.sign(
-      { user_id: user._id, user_role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "20m" }
-    );
-
-    return res.status(200).json({
-      success: true,
-      message: `User Logged as ${user.role.toUpperCase()}`,
-      token: token,
-    });
   } catch (error) {
     return res.status(500).json({
       success: false,
