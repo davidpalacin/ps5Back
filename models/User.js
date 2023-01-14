@@ -23,6 +23,10 @@ const UserSchema = new mongoose.Schema(
       enum: ["user", "admin", "super_admin"],
       default: "user",
     },
+    movies: {
+      type: Array,
+      default: []
+    },
   },
   {
     timestamps: true,

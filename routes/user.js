@@ -5,9 +5,10 @@ import UserController from '../controllers/UserController.js';
 import isSuperAdmin from '../middlewares/isSuperAdmin.js';
 import verifyToken from '../middlewares/verifyToken.js';
 
-/* GET users listing. */
+/* Routes users listing. */
 router.get("/users", verifyToken, isSuperAdmin, UserController.getAll);
 router.get("/users/:name", UserController.getByName);
 router.delete("/users/delete/:name", UserController.delete);
+router.patch('/users/update/:id', UserController.update);
 
 export default router;

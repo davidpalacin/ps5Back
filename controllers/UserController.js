@@ -50,5 +50,17 @@ UserController.delete = async (req, res) => {
   }
 }
 
+UserController.update = async (req, res) => {
+  try {
+    const updatedUser = await User.updateOne(
+      { _id: req.params.id },
+      { $set: req.body }
+    );
+    res.json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
 
 export default UserController;
