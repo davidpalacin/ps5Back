@@ -96,23 +96,17 @@ UserController.updateUserMovies = async (req, res) => {
   }
 };
 
-// Marcar película como vista
+// Marcar película como vista o no vista.
 UserController.checkAsViewed = async (req, res) => {
   try {
-    // Buscar el documento del usuario
-    const user = await User.findOne({ _id: req.params.id });
-    // Encontrar la película dentro del array de películas del usuario
-    const movieIndex = user.movies.findIndex(
-      (movie) => movie._id == req.params.movieId
+    const updatedUser = await User.updateOne(
+      { _id: req.params.id, "movies._id": req.params.movieId },
+      { $set: { "movies.$.viewed": req.body.viewed } }
     );
-    // Actualizar el estado "viewed" de la película a true
-    user.movies[movieIndex].viewed = req.body.viewed;
-    // Guardar los cambios en la base de datos
-    await user.save();
-    // Enviar una respuesta exitosa al cliente
-    res.json({ message: "View state updated", data: user });
+    //Enviar una respuesta exitosa al cliente
+    res.json({ message: "view status updated", data: updatedUser });
   } catch (error) {
-    // Enviar una respuesta de error al cliente
+    //Enviar una respuesta de error al cliente
     res.status(500).json({ message: error.message });
   }
 };
