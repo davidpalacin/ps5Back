@@ -70,7 +70,7 @@ UserController.delete = async (req, res) => {
 UserController.updateUserMovies = async (req, res) => {
   try {
     const updatedUser = await User.updateOne(
-      { _id: req.params.id, "movies._id": { $ne: movie._id } },
+      { _id: req.params.id, "movies._id": { $ne: req.body._id } },
       { $push: { movies: req.body } }
     );
 
@@ -80,7 +80,7 @@ UserController.updateUserMovies = async (req, res) => {
         data: updatedUser,
       });
     } 
-    
+
     // Si no ha sido modificado devolver un json con el mensaje de que ya tiene esta película
     res.json({
       message: "User already have this movie",
