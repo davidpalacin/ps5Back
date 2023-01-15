@@ -24,7 +24,7 @@ UserController.getAll = async (req, res) => {
 // get user by name
 UserController.getByName = async (req, res) => {
   try {
-    const user = await User.findOne({name: req.params.name});
+    const user = await User.findOne({ name: req.params.name });
 
     return res.status(200).json({
       success: true,
@@ -43,7 +43,7 @@ UserController.getByName = async (req, res) => {
 // delete user by name
 UserController.delete = async (req, res) => {
   try {
-    const deletedOne = await User.deleteOne({name: req.params.name});
+    const deletedOne = await User.deleteOne({ name: req.params.name });
     res.json({
       message: `${req.params.name} DELETED`,
       data: deletedOne,
@@ -51,12 +51,12 @@ UserController.delete = async (req, res) => {
   } catch (error) {
     res.status(500).send("internal server error");
   }
-}
+};
 
 // delete user by id
 UserController.delete = async (req, res) => {
   try {
-    const deletedUser = await User.deleteOne({_id: req.params.id});
+    const deletedUser = await User.deleteOne({ _id: req.params.id });
     res.json({
       message: `User ${req.params.id} DELETED`,
       data: deletedUser,
@@ -64,9 +64,9 @@ UserController.delete = async (req, res) => {
   } catch (error) {
     res.status(500).send("Internal server error");
   }
-}
+};
 
-// Actualizar peliculas de un usuario 
+// Actualizar peliculas de un usuario
 UserController.updateUserMovies = async (req, res) => {
   try {
     const updatedUser = await User.updateOne(
@@ -79,17 +79,16 @@ UserController.updateUserMovies = async (req, res) => {
         message: `User ${req.params.id} UPDATED`,
         data: updatedUser,
       });
-    } 
+    } else {
+      res.json({
+        message: "User already have this movie",
+      });
+    }
 
     // Si no ha sido modificado devolver un json con el mensaje de que ya tiene esta película
-    res.json({
-      message: "User already have this movie",
-    });
-    
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
-
+};
 
 export default UserController;
