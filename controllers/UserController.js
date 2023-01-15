@@ -74,7 +74,7 @@ UserController.updateUserMovies = async (req, res) => {
       { $push: { movies: req.body } }
     );
 
-    if (updatedUser.nModified > 0) {
+    if (updatedUser.modifiedCount > 0) {
       res.json({
         message: `User ${req.params.id} UPDATED`,
         data: updatedUser,
