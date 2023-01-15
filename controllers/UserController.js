@@ -72,9 +72,9 @@ UserController.updateUserMovies = async (req, res) => {
     const updatedUser = await User.updateOne(
       { _id: req.params.id, "movies._id": { $ne: req.body._id } },
       { $push: { movies: req.body } }
-    );
+    ).exec();
 
-    if (updatedUser.modifiedCount > 0) {
+    if (updatedUser.nModified > 0) {
       res.json({
         message: `User ${req.params.id} UPDATED`,
         data: updatedUser,
@@ -82,6 +82,7 @@ UserController.updateUserMovies = async (req, res) => {
     } else {
       res.json({
         message: "User already have this movie",
+        data: updatedUser,
       });
     }
 
