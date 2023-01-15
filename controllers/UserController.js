@@ -78,6 +78,7 @@ UserController.updateUserMovies = async (req, res) => {
       // Si no ha sido modificado devolver un json con el mensaje de que ya tiene esta película
       res.json({
         message: "User already have this movie",
+        inserted: false,
       });
     } else {
       const updatedUser = await User.updateOne(
@@ -87,6 +88,7 @@ UserController.updateUserMovies = async (req, res) => {
       res.json({
         message: "User movies updated successfully",
         data: updatedUser,
+        inserted: true
       });
     }
   } catch (error) {
