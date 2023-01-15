@@ -111,4 +111,20 @@ UserController.checkAsViewed = async (req, res) => {
   }
 };
 
+// Eliminar pelicula del usuario
+  UserController.deleteMovie = async (req, res) => {
+    try {
+      const updatedUser = await User.updateOne(
+        { _id: req.params.id },
+        { $pull: { movies: { _id: req.params.movieId } } }
+      );
+      //Enviar una respuesta exitosa al cliente
+      res.json({ message: "Movie removed", data: updatedUser, removed: true });
+    } catch (error) {
+      //Enviar una respuesta de error al cliente
+      res.status(500).json({ message: error.message, removed: false });
+    }
+  };
+
+
 export default UserController;
