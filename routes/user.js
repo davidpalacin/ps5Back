@@ -9,6 +9,6 @@ import verifyToken from '../middlewares/verifyToken.js';
 router.get("/users", verifyToken, isSuperAdmin, UserController.getAll);
 router.get("/users/:name", UserController.getByName);
 router.delete("/users/delete/:name", UserController.delete);
-router.patch('/users/update/:id', UserController.update);
+router.patch('/users/update/:id', UserController.updateUserMovies);
 
 export default router;

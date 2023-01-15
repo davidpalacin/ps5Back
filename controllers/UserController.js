@@ -66,12 +66,12 @@ UserController.delete = async (req, res) => {
   }
 }
 
-// Actualizar un usuario
-UserController.update = async (req, res) => {
+// Actualizar peliculas de un usuario 
+UserController.updateUserMovies = async (req, res) => {
   try {
     const updatedUser = await User.updateOne(
       { _id: req.params.id },
-      { $set: req.body }
+      { $push: {movies: req.body} }
     );
     res.json({
       message: `User ${req.params.id} UPDATED`,
