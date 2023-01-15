@@ -106,7 +106,7 @@ UserController.checkAsViewed = async (req, res) => {
       (movie) => movie._id == req.params.movieId
     );
     // Actualizar el estado "viewed" de la película a true
-    user.movies[movieIndex].viewed = true;
+    user.movies[movieIndex].viewed = req.body.viewed;
     // Guardar los cambios en la base de datos
     await user.save();
     // Enviar una respuesta exitosa al cliente
