@@ -69,24 +69,26 @@ UserController.delete = async (req, res) => {
 // Actualizar peliculas de un usuario
 UserController.updateUserMovies = async (req, res) => {
   try {
-    const updatedUser = await User.updateOne(
-      { _id: req.params.id, "movies._id": { $ne: req.body._id } },
-      { $push: { movies: req.body } }
-    ).exec();
+    // comprobar primero que el usuario no tenga ya esa película
+    const user = await User.findById(req.params.id);
+    const movie = req.body;
+    const match = user.movies.find((m) => m._id == movie._id);
 
-    if (updatedUser.nModified > 0) {
-      res.json({
-        message: `User ${req.params.id} UPDATED`,
-        data: updatedUser,
-      });
-    } else {
+    if (match) {
+      // Si no ha sido modificado devolver un json con el mensaje de que ya tiene esta película
       res.json({
         message: "User already have this movie",
+      });
+    } else {
+      const updatedUser = await User.updateOne(
+        { _id: req.params.id },
+        { $push: { movies: req.body } }
+      );
+      res.json({
+        message: "User movies updated successfully",
         data: updatedUser,
       });
     }
-
-    // Si no ha sido modificado devolver un json con el mensaje de que ya tiene esta película
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
