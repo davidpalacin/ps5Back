@@ -66,6 +66,7 @@ UserController.delete = async (req, res) => {
   }
 }
 
+// Actualizar un usuario
 UserController.update = async (req, res) => {
   try {
     const updatedUser = await User.updateOne(
