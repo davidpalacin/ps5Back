@@ -10,5 +10,6 @@ router.get("/users", verifyToken, isSuperAdmin, UserController.getAll);
 router.get("/users/:name", UserController.getByName);
 router.delete("/users/delete/:name", UserController.delete);
 router.patch('/users/update/:id', UserController.updateUserMovies);
+router.patch('/users/:id/check/:movieId', UserController.checkAsViewed);
 
 export default router;
