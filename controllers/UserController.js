@@ -40,29 +40,16 @@ UserController.getByName = async (req, res) => {
   }
 };
 
-// delete user by name
-UserController.delete = async (req, res) => {
+// delete user by id
+UserController.deleteById = async (req, res) => {
   try {
-    const deletedOne = await User.deleteOne({ name: req.params.name });
+    const deletedOne = await User.deleteOne({ _id: req.params.id });
     res.json({
-      message: `${req.params.name} DELETED`,
+      message: `${req.params.id} DELETED`,
       data: deletedOne,
     });
   } catch (error) {
     res.status(500).send("internal server error");
-  }
-};
-
-// delete user by id
-UserController.delete = async (req, res) => {
-  try {
-    const deletedUser = await User.deleteOne({ _id: req.params.id });
-    res.json({
-      message: `User ${req.params.id} DELETED`,
-      data: deletedUser,
-    });
-  } catch (error) {
-    res.status(500).send("Internal server error");
   }
 };
 

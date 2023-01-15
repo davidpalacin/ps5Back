@@ -8,7 +8,7 @@ import verifyToken from '../middlewares/verifyToken.js';
 /* Routes users listing. */
 router.get("/users", verifyToken, isSuperAdmin, UserController.getAll);
 router.get("/users/:name", UserController.getByName);
-router.delete("/users/delete/:name", UserController.delete);
+router.delete("/users/delete/:id", UserController.deleteById);
 router.delete("/users/:id/deleteMovie/:movieId", UserController.deleteMovie);
 router.patch('/users/update/:id', UserController.updateUserMovies);
 router.patch('/users/:id/check/:movieId', UserController.checkAsViewed);
